@@ -41,7 +41,7 @@ describe('Scenario: API Testing with ReqRes GET', () => {
     })
 });
    describe('Scenario: API Testing with ReqRes POST', () => {
-    it('07 Create User - POST Request', () => {
+    it('03 Create User - POST Request', () => {
         const userData = {
                 name: 'Dhea Karina',
                 job: 'Software Developer'
@@ -62,7 +62,7 @@ describe('Scenario: API Testing with ReqRes GET', () => {
                 expect(response.body).to.have.property('createdAt').and.to.be.a('string')
             })
     }) 
-    it('08 Register - POST Request', () => {
+    it('04 Register - POST Request', () => {
         cy.request({
             method: 'POST',
             url: 'https://reqres.in/api/register',
@@ -80,7 +80,7 @@ describe('Scenario: API Testing with ReqRes GET', () => {
                 expect(response.body).to.have.property('token')
             })
     })
-    it('09 Register Unsuccessful - POST Request', () => {
+    it('05 Register Unsuccessful - POST Request', () => {
         cy.request({
             method: 'POST',
             url: 'https://reqres.in/api/register',
@@ -97,7 +97,7 @@ describe('Scenario: API Testing with ReqRes GET', () => {
                 expect(response.body).to.have.property('error', 'Missing password')
             })
     })
-    it('10 Login - POST Request', () => {
+    it('06 Login - POST Request', () => {
         cy.request({
             method: 'POST',
             url: 'https://reqres.in/api/login',
@@ -114,7 +114,7 @@ describe('Scenario: API Testing with ReqRes GET', () => {
                 expect(response.body).to.have.property('token')
             })
     })
-    it('11 Login Unsuccessful - POST Request', () => {
+    it('07 Login Unsuccessful - POST Request', () => {
         cy.request({
             method: 'POST',
             url: 'https://reqres.in/api/login',
@@ -133,7 +133,7 @@ describe('Scenario: API Testing with ReqRes GET', () => {
     })
 });
 describe('Scenario: API Testing with ReqRes PUT', () => {
-    it('12 Update User - PUT Request', () => {
+    it('08 Update User - PUT Request', () => {
         const updateData = {
                name: 'Dhea Karina',
                 job: 'Software Developer'
@@ -155,7 +155,7 @@ describe('Scenario: API Testing with ReqRes PUT', () => {
     })
 });
 describe('Scenario: API Testing with ReqRes PATCH', () => {
-    it('13 Update User - PATCH Request', () => {
+    it('09 Update User - PATCH Request', () => {
         const patchData = {
                name: 'Dhea Karina',
                 job: 'Software Developer'
@@ -177,7 +177,7 @@ describe('Scenario: API Testing with ReqRes PATCH', () => {
     })
 });
 describe('Scenario: API Testing with ReqRes DELETE', () => {
-    it('14 Delete User - DELETE Request', () => {
+    it('10 Delete User - DELETE Request', () => {
         cy.request({
             method: 'DELETE',
             url: 'https://reqres.in/api/users/2',
