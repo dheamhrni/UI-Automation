@@ -1,40 +1,66 @@
-class loginPage {
+// cypress/support/pageObjects/LoginPage.js
+class LoginPage {
+    // ------------------------------------
+    // 1. SELECTORS/ELEMENTS (Getter)
+    // ------------------------------------
+    get usernameField() { return cy.get('input[placeholder="Username"]') }
+    get passwordField() { return cy.get('input[placeholder="Password"]') }
+    get loginButton() { return cy.get('button[type="submit"]') }
+    get forgotPasswordLink() { return cy.contains('Forgot your password?') }
+    get loginHeader() { return cy.contains('.oxd-text.oxd-text--h5', 'Login') }
+    get errorAlert() { return cy.get('.oxd-alert-content-text') }
+    get requiredMessages() { return cy.get('.oxd-input-field-error-message:contains("Required")')}
+    get resetPasswordButton() { return cy.get('button[type="submit"]').contains('Reset Password'); 
+    
+    }
     visitPage() {
-        cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login') 
+}
+    login(username, password) {
+        this.usernameField.type(username)
+        this.passwordField.type(password)
+        this.loginButton.click()
     }
-    inputUsername(username) {
-        cy.get('input[placeholder="Username"]').type(username).should('have.value', username)
+    goToForgotPassword() {
+        this.forgotPasswordLink.click();
+        cy.url().should('include', '/auth/requestPasswordResetCode');
     }
-    inputPassword(password) {
-        cy.get('input[placeholder="Password"]').type(password).should('have.value', password)
+        requestPasswordReset(username) {
+        this.usernameField.type(username);
+        cy.contains('button', 'Reset Password').click(); 
     }
-    clickSubmit() {
-        cy.get('button[type="submit"]').should('be.visible').click()
-    }
-    assertionlogin() {
+    
+    logout() {
+    cy.get('.oxd-userdropdown').click();
+    cy.contains('.oxd-dropdown-menu', 'Logout').click();
+    cy.clearCookies();
+    cy.visit('/web/index.php/auth/login');
+    cy.url().should('include', '/auth/login'); 
+    cy.contains('.oxd-text--h5', 'Login').should('be.visible');
+}
+    // ------------------------------------
+    // 3. ASSERTIONS
+    // ------------------------------------
+    assertLoginSuccess() {
         cy.url().should('include', '/web/index.php/dashboard/index');
     }
-    assertionErrorLogin() {
+
+    assertLoginError(message) {
         cy.url().should('not.include', '/web/index.php/dashboard/index');
+        this.errorAlert.should('be.visible').and('contain', message);
     }
-    assertionUILengkap() {
-        // Verifikasi Judul/Header Login
-        cy.contains('.oxd-text--h5', 'Login').should('be.visible'); 
-        // Verifikasi Logo Perusahaan terlihat
+    
+// ... di bagian assertions
+    assertRequiredField(count = 1) { // Default count diubah menjadi 1
+        this.requiredMessages.should('have.length', count).and('be.visible');
+    }
+
+    assertUILengkap() {
+        this.loginHeader.should('be.visible');
         cy.get('.orangehrm-login-logo > img').should('be.visible');
-        // Verifikasi Form Username dan Password terlihat   
-        cy.get('input[name="username"]').should('be.visible');
-        cy.get('input[name="password"]').should('be.visible');
-        // Verifikasi Tombol Login terlihat
-        cy.get('button[type="submit"]').should('be.visible').and('contain', 'Login');
-}
-    assertionPlaceholder() {
-        cy.get('input[placeholder="Username"]').should('have.attr', 'placeholder', 'Username');
-        cy.get('input[placeholder="Password"]').should('have.attr', 'placeholder', 'Password');
+        this.usernameField.should('be.visible').and('have.attr', 'placeholder', 'Username');
+        this.passwordField.should('be.visible').and('have.attr', 'placeholder', 'Password');
+        this.loginButton.should('be.visible').and('contain', 'Login');
     }
-    redirectLupaPassword() {
-        cy.contains('Forgot your password?').should('be.visible').click();
-        cy.url().should('include', '/web/index.php/auth/requestPasswordResetCode');
 }
-}
-export default new loginPage();
+export default new LoginPage();

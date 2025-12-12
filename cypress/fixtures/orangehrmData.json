@@ -1,0 +1,12 @@
+{
+    "validUser": {
+        "username": "Admin",
+        "password": "admin123"
+    },
+    "invalidUser": {
+        "username": "adminsalah",
+        "password": "passwordsalah"
+    },
+    "existingEmployee": "Amelia Brown",
+    "nonExistingEmployee": "NonExistingEmployeeName"
+}

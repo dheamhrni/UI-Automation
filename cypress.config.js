@@ -8,6 +8,6 @@ module.exports = defineConfig({
     },
     supportFile: "cypress/support/e2e.js",
     defaultCommandTimeout: 30000, //dalam milisecond (30 detik)
-    baseUrl : "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
+    baseUrl : "https://opensource-demo.orangehrmlive.com/"
   },
 });
